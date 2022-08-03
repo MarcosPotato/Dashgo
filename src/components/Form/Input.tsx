@@ -15,7 +15,7 @@ export default function Input({ name, label, ...rest }: InputProps){
         <FormControl>
             { label &&
                 <FormLabel htmlFor={ name }>
-                    Senha
+                    { label }
                 </FormLabel>
             }
             <CKInput
