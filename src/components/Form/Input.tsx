@@ -1,24 +1,36 @@
+import { forwardRef, ForwardRefRenderFunction } from 'react'
+import { FieldError } from 'react-hook-form'
+
 import { 
     Input as CKInput, 
     FormLabel, 
     FormControl,
-    InputProps as CKInputProps
+    InputProps as CKInputProps,
+    FormErrorMessage
 } from '@chakra-ui/react'
 
 interface InputProps extends CKInputProps{
     name: string,
-    label?: string
+    label?: string,
+    error?: FieldError
 }
 
-export default function Input({ name, label, ...rest }: InputProps){
+const Input: ForwardRefRenderFunction<HTMLInputElement, InputProps> = ({ 
+    name, 
+    label, 
+    error = null, 
+    ...rest 
+}, ref) =>{
     return(
-        <FormControl>
+        <FormControl isInvalid={!!error}>
             { label &&
                 <FormLabel htmlFor={ name }>
                     { label }
                 </FormLabel>
             }
             <CKInput
+                id={ name }
+                name={ name }
                 focusBorderColor="pink.500"
                 bgColor="gray.900"
                 variant="filled"
@@ -26,10 +38,16 @@ export default function Input({ name, label, ...rest }: InputProps){
                 _hover={{
                     bgColor: "gray.900"
                 }}
+                ref={ ref }
                 {...rest}
-                id={ name }
-                name={ name }
             />
+            { !!error && 
+                <FormErrorMessage>
+                    { error.message }
+                </FormErrorMessage>
+            }
         </FormControl>
     )
 }
+
+export default forwardRef(Input)
