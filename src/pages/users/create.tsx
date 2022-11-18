@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useMutation } from "react-query";
 
 import Input from "../../components/Form/Input";
 import Header from "../../components/Header";
@@ -18,6 +19,9 @@ import {
     SimpleGrid,
     VStack
 } from "@chakra-ui/react";
+import { api } from "../../services/api";
+import { queryClient } from "../../services/queryClient";
+import { useRouter } from "next/router";
 
 interface FormValues{
     name: string
@@ -37,12 +41,33 @@ const createUserFormSchema = Yup.object().shape({
 
 export default function CreateUser() {
 
+    const route = useRouter()
+
+    const createUser = useMutation(async(user: FormValues) => {
+        const response = await api.post("users", {
+            user: {
+                name: user.name,
+                email: user.email,
+                password: user.password_confirmation,
+                created_at: new Date()
+            }
+        })
+
+        return response.data.user
+    }, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("users")
+        }
+    })
+
     const { register, handleSubmit, formState } = useForm<FormValues>({
         resolver: yupResolver(createUserFormSchema)
     })
 
-    const handleCreateUser = async() => {
+    const handleCreateUser = async(data: FormValues) => {
+        await createUser.mutateAsync(data)
 
+        route.push("/users")
     }
 
     return(

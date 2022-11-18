@@ -91,7 +91,7 @@ const Dashboard: NextPage = () => {
                         pb="4"
                     >
                         <Text fontSize="lg" mb="4">Inscritos da semana</Text>
-                        <Chart 
+                        <Chart
                             type="area"
                             height={160}
                             options={options}
