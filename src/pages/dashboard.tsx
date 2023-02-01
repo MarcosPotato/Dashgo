@@ -62,6 +62,18 @@ const series = [
     { name: "series1", data: [31, 120, 10, 28, 51, 18, 109] }
 ]
 
+const series2 = [
+    { name: "series2", data: [90, 27, 12, 33, 12, 120] }
+]
+
+const series3 = [
+    { name: "series3", data: [31, 27, 12, 33, 90, 27, 109] }
+]
+
+const series4 = [
+    { name: "series4", data: [ 27, 33, 12, 120, 27, 12, 109] }
+]
+
 const Dashboard: NextPage = () => {
     return(
         <Flex
@@ -81,8 +93,9 @@ const Dashboard: NextPage = () => {
                 <SimpleGrid
                     flex="1"
                     gap="4"
-                    minChildWidth="320px"
+                    minChildWidth="400px"
                     alignItems="flex-start"
+                    flexWrap="wrap"
                 >
                     <Box
                         p={["6", "8"]}
@@ -109,7 +122,35 @@ const Dashboard: NextPage = () => {
                             type="area"
                             height={160}
                             options={options}
-                            series={series}
+                            series={series2}
+                        />
+                    </Box>
+                    <Box
+                        p={["6", "8"]}
+                        bg="gray.800"
+                        borderRadius={8}
+                        pb="4"
+                    >
+                        <Text fontSize="lg" mb="4">Faturamento</Text>
+                        <Chart
+                            type="area"
+                            height={160}
+                            options={options}
+                            series={series3}
+                        />
+                    </Box>
+                    <Box
+                        p={["6", "8"]}
+                        bg="gray.800"
+                        borderRadius={8}
+                        pb="4"
+                    >
+                        <Text fontSize="lg" mb="4">Resumo</Text>
+                        <Chart 
+                            type="area"
+                            height={160}
+                            options={options}
+                            series={series4}
                         />
                     </Box>
                 </SimpleGrid>
