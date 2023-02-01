@@ -63,7 +63,7 @@ const series = [
 ]
 
 const series2 = [
-    { name: "series2", data: [90, 27, 12, 33, 12, 120] }
+    { name: "series2", data: [90, 27, 12, 33, 12, 120, 109] }
 ]
 
 const series3 = [
